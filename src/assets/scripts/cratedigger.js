@@ -565,6 +565,16 @@ function initScene() {
   CameraManager.init(canvasWidth / canvasHeight);
   camera = CameraManager.getCamera();
 
+  var img = new Image();
+  var mapCanvas = document.createElement('canvas');
+  woodTexture = new THREE.Texture(mapCanvas);
+  img.crossOrigin = 'Anonymous';
+  img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg";
+  woodTexture.minFilter = THREE.LinearFilter;
+  img.onload = function () {
+    woodTexture.needsUpdate = true;
+  }
+
   woodTexture = THREE.ImageUtils.loadTexture(Constants.crateTexture);
   woodTexture.anisotropy = renderer.getMaxAnisotropy();
   woodMaterial = new THREE.MeshLambertMaterial({

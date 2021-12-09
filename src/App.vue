@@ -7,7 +7,7 @@
         {{ d.basic_information.title }}
       </div>
     </div> -->
-    <Canvas v-if="data.length > 0" :records="data"/>
+    <Canvas v-if="data.length > 0" :records="data" />
     <div v-if="data.length === 0">
       <h1>Loading...</h1>
     </div>
@@ -29,12 +29,14 @@ export default {
           `https://api.discogs.com/users/beankonducta/collection/folders/0/releases?key=${process.env.VUE_APP_KEY}&secret=${process.env.VUE_APP_SECRET}&per_page=5`
         )
         .then((res) => {
-          this.data = this.mapData(res.data.releases.sort((a, b) =>
-            a.basic_information.artists[0].name >
-            b.basic_information.artists[0].name
-              ? 1
-              : -1
-          ));
+          this.data = this.mapData(
+            res.data.releases.sort((a, b) =>
+              a.basic_information.artists[0].name >
+              b.basic_information.artists[0].name
+                ? 1
+                : -1
+            )
+          );
         });
     },
     mapData(d) {
@@ -43,12 +45,13 @@ export default {
         newData.push({
           title: val.basic_information.title,
           artist: val.basic_information.artists[0].name,
-          cover: "",
+          // cover: val.basic_information.cover_image,
+          cover:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg",
           year: val.basic_information.year,
           id: val.id,
           hasSleeve: false,
         });
-
       });
       return newData;
     },

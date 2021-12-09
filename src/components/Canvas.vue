@@ -75,11 +75,9 @@ export default {
       if (record.data.title) {
         titleContainer.innerHTML = record.data.title;
       }
-
       if (record.data.artist) {
         artistContainer.innerHTML = record.data.artist;
       }
-
       if (record.data.cover) {
         coverContainer.style.backgroundImage = "url(" + record.data.cover + ")";
       }

@@ -3,7 +3,7 @@ export default {
   canvasWidth: null,
   canvasHeight: null,
   nbCrates: 2,
-  recordsPerCrate: 24,
+  recordsPerCrate: 50,
   lightIntensity: 1,
   cameraMouseMove: true,
   backgroundColor: 0x111111,
@@ -12,7 +12,7 @@ export default {
   crateTexture: 'images/wood.jpg',
   closeInfoPanelOnClick: true,
   closeInfoPanelOnScroll: true,
-  postprocessing: true,
+  postprocessing: false,
   blurAmount: 0.4,
   updateCanvasSizeOnWindowResize: true,
   elements: {

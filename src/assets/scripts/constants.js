@@ -12,7 +12,7 @@ export default {
   crateTexture: 'images/wood.jpg',
   closeInfoPanelOnClick: true,
   closeInfoPanelOnScroll: true,
-  postprocessing: false,
+  postprocessing: true,
   blurAmount: 0.4,
   updateCanvasSizeOnWindowResize: true,
   elements: {

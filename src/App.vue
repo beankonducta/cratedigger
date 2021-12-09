@@ -43,7 +43,7 @@ export default {
         newData.push({
           title: val.basic_information.title,
           artist: val.basic_information.artists[0].name,
-          cover: val.basic_information.cover_image,
+          cover: "",
           year: val.basic_information.year,
           id: val.id,
           hasSleeve: false,

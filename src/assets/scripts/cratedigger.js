@@ -28,6 +28,8 @@ let depthShader;
 let depthUniforms;
 let depthMaterial;
 
+let nbCrates;
+
 // Objects & data arrays
 let crates = [];
 let records = [];
@@ -565,21 +567,16 @@ function initScene() {
   CameraManager.init(canvasWidth / canvasHeight);
   camera = CameraManager.getCamera();
 
-  var img = new Image();
-  var mapCanvas = document.createElement('canvas');
-  woodTexture = new THREE.Texture(mapCanvas);
-  img.crossOrigin = 'Anonymous';
-  img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg";
-  woodTexture.minFilter = THREE.LinearFilter;
-  img.onload = function () {
-    woodTexture.needsUpdate = true;
-  }
-
-  woodTexture = THREE.ImageUtils.loadTexture(Constants.crateTexture);
-  woodTexture.anisotropy = renderer.getMaxAnisotropy();
-  woodMaterial = new THREE.MeshLambertMaterial({
-    map: woodTexture,
+  woodTexture = new THREE.TextureLoader().load("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",
+  function(texture) {
+    woodMaterial = new THREE.MeshLambertMaterial({
+      map: texture,
+    });
   });
+
+  // woodMaterial = new THREE.MeshLambertMaterial({
+  //   map: woodTexture,
+  // });
 
   rootContainer = new THREE.Object3D();
   cratesContainer = new THREE.Object3D();
@@ -769,12 +766,12 @@ function initCrates() {
   var crateId;
   var crate;
 
-  for (crateId = 0; crateId < Constants.nbCrates; crateId++) {
+  for (crateId = 0; crateId < nbCrates; crateId++) {
     crate = createCrate(crateId);
     cratesContainer.add(crate);
   }
 
-  cratesContainer.position.z = -(110 - (110 * Constants.nbCrates)) / 2;
+  cratesContainer.position.z = -(110 - (110 * nbCrates)) / 2;
 }
 
 function createCrate(id) {
@@ -1046,6 +1043,7 @@ function isFunction(obj) {
 // Public Methods
 exports.init = function init(params) {
   Constants.extend(params);
+  nbCrates = params.records ? params.records.length / Constants.recordsPerCrate : 2;
 
   // feature test
   // if (!Modernizr.webgl) return; TODO

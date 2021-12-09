@@ -9,7 +9,7 @@ export default {
   backgroundColor: 0x111111,
   sleeveColor: 0x0d0702,
   sleeveMaskTexture: 'images/sleeve.png',
-  crateTexture: 'images/wood.jpg',
+  crateTexture: 'https://assets.hongkiat.com/uploads/wood-textures/simple-wood-texture.jpg',
   closeInfoPanelOnClick: true,
   closeInfoPanelOnScroll: true,
   postprocessing: false,

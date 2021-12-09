@@ -19,6 +19,8 @@ import axios from "axios";
 import Canvas from "./components/Canvas.vue";
 require("dotenv").config();
 
+axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+
 export default {
   name: "App",
   components: { Canvas },
@@ -26,9 +28,10 @@ export default {
     getReleases() {
       axios
         .get(
-          `https://api.discogs.com/users/beankonducta/collection/folders/0/releases?key=${process.env.VUE_APP_KEY}&secret=${process.env.VUE_APP_SECRET}&per_page=5`
+          `https://api.discogs.com/users/beankonducta/collection/folders/0/releases?key=${process.env.VUE_APP_KEY}&secret=${process.env.VUE_APP_SECRET}&per_page=500`
         )
         .then((res) => {
+          console.log(res);
           this.data = this.mapData(
             res.data.releases.sort((a, b) =>
               a.basic_information.artists[0].name >
@@ -45,9 +48,9 @@ export default {
         newData.push({
           title: val.basic_information.title,
           artist: val.basic_information.artists[0].name,
-          // cover: val.basic_information.cover_image,
-          cover:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg",
+          cover: val.basic_information.cover_image,
+          // cover:
+          //   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg",
           year: val.basic_information.year,
           id: val.id,
           hasSleeve: false,
@@ -196,7 +199,7 @@ table {
 
 #app {
   width: 100%;
-  height: 1000px;
+  height: 800px;
 }
 
 .record {

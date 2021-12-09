@@ -13,6 +13,7 @@
         <div class="vertical-center">
           <div id="cratedigger-record-artist"></div>
           <div id="cratedigger-record-title"></div>
+          <div id="cratedigger-record-year"></div>
           <div id="cratedigger-record-cover"></div>
         </div>
       </div>
@@ -45,6 +46,7 @@ export default {
       var self = this;
       cratedigger.init({
         debug: false,
+        records: this.records,
         elements: {
           rootContainer: document.getElementById("cratedigger"),
           canvasContainer: document.getElementById("cratedigger-canvas"),
@@ -69,6 +71,9 @@ export default {
       const artistContainer = document.getElementById(
         "cratedigger-record-artist"
       );
+       const yearContainer = document.getElementById(
+        "cratedigger-record-year"
+      );
       const coverContainer = document.getElementById(
         "cratedigger-record-cover"
       );
@@ -80,6 +85,9 @@ export default {
       }
       if (record.data.cover) {
         coverContainer.style.backgroundImage = "url(" + record.data.cover + ")";
+      }
+      if (record.data.year) {
+        yearContainer.innerHTML = record.data.year;
       }
     },
   },
@@ -129,6 +137,12 @@ export default {
 }
 
 #cratedigger-record-artist {
+  color: #fefefe;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+#cratedigger-record-year {
   color: #fefefe;
   font-size: 26px;
   font-weight: 700;

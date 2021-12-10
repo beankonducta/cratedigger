@@ -813,6 +813,7 @@ function createCrate(id) {
 }
 
 function initRecords() {
+  records = [];
   var currentRecordId = 0;
   var crateId;
   var pos;

@@ -44,6 +44,7 @@ export default {
   methods: {
     init() {
       var self = this;
+      console.log(this.records);
       cratedigger.init({
         debug: false,
         records: this.records,
@@ -98,7 +99,7 @@ export default {
 <style scoped>
 #cratedigger {
   width: 100%;
-  height: 100vh;
+  height: 75vh;
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

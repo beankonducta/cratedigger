@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <!-- <div v-if="data.length > 0">
-      <div class="record" v-for="d in data" v-bind:key="d.id">
-        <img v-bind:src="d.basic_information.cover_image">
-        {{ d.basic_information.artists[0].name }}
-        {{ d.basic_information.title }}
-      </div>
-    </div> -->
-    <Canvas v-if="data.length > 0" :records="data" />
-    <div v-if="data.length === 0">
+    <div id="top-bar">
+      <input v-model="username" />
+      <button @click="getReleases()">Fetch</button>
+    </div>
+    <Canvas v-if="!loading" :records="data" />
+    <div v-if="loading">
       <h1>Loading...</h1>
     </div>
   </div>
@@ -19,19 +16,22 @@ import axios from "axios";
 import Canvas from "./components/Canvas.vue";
 require("dotenv").config();
 
-axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 
 export default {
   name: "App",
   components: { Canvas },
   methods: {
     getReleases() {
+      this.data = [];
+      this.loading = true;
       axios
         .get(
-          `https://api.discogs.com/users/beankonducta/collection/folders/0/releases?key=${process.env.VUE_APP_KEY}&secret=${process.env.VUE_APP_SECRET}&per_page=500`
+          `https://api.discogs.com/users/${this.username}/collection/folders/0/releases?key=${process.env.VUE_APP_KEY}&secret=${process.env.VUE_APP_SECRET}&per_page=500`
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           this.data = this.mapData(
             res.data.releases.sort((a, b) =>
               a.basic_information.artists[0].name >
@@ -49,19 +49,20 @@ export default {
           title: val.basic_information.title,
           artist: val.basic_information.artists[0].name,
           cover: val.basic_information.cover_image,
-          // cover:
-          //   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rick_Astley_Dallas.jpg/267px-Rick_Astley_Dallas.jpg",
           year: val.basic_information.year,
           id: val.id,
           hasSleeve: false,
         });
       });
+      this.loading = false;
       return newData;
     },
   },
   data() {
     return {
       data: [],
+      loading: true,
+      username: "beankonducta",
     };
   },
   mounted() {
@@ -200,6 +201,12 @@ table {
 #app {
   width: 100%;
   height: 800px;
+}
+
+#top-bar {
+  width: 100%;
+  height: 10%;
+  text-align: center;
 }
 
 .record {
